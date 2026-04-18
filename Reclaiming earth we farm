@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reclaiming The Earth We Farm</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --soil: #1a1208;
+    --earth: #2d1f0e;
+    --mud: #3d2b14;
+    --bark: #5c3d1e;
+    --clay: #8b5e3c;
+    --moss: #4a6741;
+    --leaf: #6b9e5e;
+    --sprout: #8ec97a;
+    --amber: #d4820a;
+    --warning: #c94a1e;
+    --cream: #f5ead8;
+    --pale: #ede0ca;
+    --text: #e8dcc8;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--soil);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 80%, rgba(74,103,65,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 80% 20%, rgba(212,130,10,0.08) 0%, transparent 50%),
+      linear-gradient(175deg, #1a1208 0%, #2a1a0a 50%, #1d1308 100%);
+    z-index: 0;
+  }
+
+  /* Animated river lines */
+  .river-lines {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    opacity: 0.15;
+  }
+  .river-lines svg { width: 100%; height: 100%; }
+
+  nav {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 4rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .nav-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--leaf);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(232,220,200,0.5);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--sprout); }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 4rem 2rem;
+    max-width: 1100px;
+  }
+
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--leaf);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--leaf);
+  }
+
+  h1.hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 900;
+    line-height: 1.0;
+    color: var(--cream);
+    margin-bottom: 0.3em;
+  }
+  h1.hero-title em {
+    font-style: italic;
+    color: var(--sprout);
+  }
+  h1.hero-title .sub {
+    font-weight: 400;
+    font-size: 0.5em;
+    display: block;
+    color: rgba(232,220,200,0.55);
+    margin-top: 0.4em;
+    letter-spacing: 0.03em;
+    line-height: 1.4;
+  }
+
+  .hero-meta {
+    margin-top: 3rem;
+    display: flex;
+    gap: 3rem;
+    align-items: flex-start;
+  }
+
+  .hero-authors {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    line-height: 1.9;
+    color: rgba(232,220,200,0.4);
+    letter-spacing: 0.05em;
+  }
+  .hero-authors strong {
+    color: rgba(232,220,200,0.7);
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .hero-stat-box {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(142,201,122,0.2);
+    padding: 1.2rem 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .hero-stat-box .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--warning);
+    line-height: 1;
+  }
+  .hero-stat-box .label {
+    font-size: 0.7rem;
+    color: rgba(232,220,200,0.5);
+    line-height: 1.4;
+    max-width: 160px;
+  }
+
+  .hero-scroll {
+    position: relative;
+    z-index: 10;
+    padding: 2rem 4rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: rgba(232,220,200,0.3);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .scroll-line {
+    width: 60px;
+    height: 1px;
+    background: rgba(232,220,200,0.2);
+    position: relative;
+    overflow: hidden;
+  }
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: var(--leaf);
+    animation: scan 2s ease-in-out infinite;
+  }
+  @keyframes scan { to { left: 100%; } }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 7rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--leaf);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(142,201,122,0.15);
+    max-width: 200px;
+  }
+
+  h2.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--cream);
+    margin-bottom: 2rem;
+  }
+  h2.section-title em { font-style: italic; color: var(--sprout); }
+
+  /* ── DIVIDER ── */
+  .full-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(142,201,122,0.2), transparent);
+  }
+
+  /* ── INTRO / CITARUM ── */
+  #intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .intro-text p {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: rgba(232,220,200,0.75);
+    margin-bottom: 1.5rem;
+  }
+  .intro-text p:first-of-type {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-style: italic;
+    color: rgba(232,220,200,0.9);
+    line-height: 1.7;
+  }
+
+  .citarum-facts {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-top: 1rem;
+  }
+  .fact-card {
+    background: rgba(255,255,255,0.025);
+    border-left: 3px solid var(--moss);
+    padding: 1.2rem 1.5rem;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .fact-card:hover {
+    border-color: var(--sprout);
+    background: rgba(142,201,122,0.05);
+  }
+  .fact-card .fact-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--amber);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .fact-card .fact-desc {
+    font-size: 0.8rem;
+    color: rgba(232,220,200,0.55);
+    line-height: 1.5;
+  }
+
+  /* ── STORY SECTION ── */
+  #story {
+    background: linear-gradient(135deg, rgba(45,31,14,0.6), rgba(26,18,8,0.8));
+    border: 1px solid rgba(255,255,255,0.04);
+    max-width: 100%;
+    padding: 6rem 10%;
+  }
+
+  .story-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--cream);
+    position: relative;
+    padding-left: 3rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .story-quote::before {
+    content: '"';
+    position: absolute;
+    left: 0; top: -0.5rem;
+    font-size: 5rem;
+    color: var(--warning);
+    font-style: normal;
+    line-height: 1;
+    opacity: 0.6;
+  }
+  .story-attribution {
+    margin-top: 2rem;
+    text-align: right;
+    max-width: 800px;
+    margin-left: auto;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: rgba(232,220,200,0.35);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── STATS BAR ── */
+  #stats {
+    padding: 5rem 4rem;
+    background: var(--earth);
+    max-width: 100%;
+  }
+  .stats-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .stat-item {
+    padding: 2.5rem 2rem;
+    border-right: 1px solid rgba(255,255,255,0.05);
+    position: relative;
+    cursor: default;
+    transition: background 0.3s;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-item:hover { background: rgba(255,255,255,0.02); }
+  .stat-item .s-num {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .stat-item .s-label {
+    font-size: 0.78rem;
+    color: rgba(232,220,200,0.45);
+    line-height: 1.5;
+  }
+  .s-num.red { color: var(--warning); }
+  .s-num.amber { color: var(--amber); }
+  .s-num.green { color: var(--sprout); }
+
+  /* ── AMR CYCLE ── */
+  #cycle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .cycle-diagram {
+    position: relative;
+    height: 360px;
+  }
+  .cycle-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px solid rgba(142,201,122,0.12);
+  }
+  .ring-1 { width: 320px; height: 320px; animation: spin 40s linear infinite; }
+  .ring-2 { width: 220px; height: 220px; border-color: rgba(201,74,30,0.15); animation: spin 25s linear infinite reverse; }
+  .ring-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,74,30,0.15), rgba(26,18,8,0.9));
+    border: 1px solid rgba(201,74,30,0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .ring-center .c-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--warning);
+    line-height: 1.4;
+  }
+
+  @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+  .cycle-node {
+    position: absolute;
+    width: 80px;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.05em;
+    color: rgba(232,220,200,0.6);
+    line-height: 1.4;
+  }
+  .cycle-node .n-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--moss);
+    margin: 0 auto 0.4rem;
+    border: 2px solid var(--leaf);
+  }
+  .n1 { top: 10px; left: 50%; transform: translateX(-50%); }
+  .n2 { top: 50%; right: 0; transform: translateY(-50%); }
+  .n3 { bottom: 10px; left: 50%; transform: translateX(-50%); }
+  .n4 { top: 50%; left: 0; transform: translateY(-50%); }
+
+  .cycle-text p {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: rgba(232,220,200,0.7);
+    margin-bottom: 1.2rem;
+  }
+
+  /* ── SOLUTIONS ── */
+  #solutions {
+    max-width: 100%;
+    padding: 7rem 10%;
+    background: linear-gradient(180deg, rgba(26,18,8,1) 0%, rgba(35,25,12,1) 100%);
+  }
+
+  .solutions-inner { max-width: 1200px; margin: 0 auto; }
+
+  .solutions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    margin-top: 3rem;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .sol-card {
+    background: var(--soil);
+    padding: 2rem;
+    transition: background 0.4s;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+  .sol-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--sprout);
+    transition: width 0.4s;
+  }
+  .sol-card:hover { background: rgba(74,103,65,0.08); }
+  .sol-card:hover::after { width: 100%; }
+
+  .sol-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    color: rgba(142,201,122,0.08);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .sol-title {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.85rem;
+    color: var(--cream);
+    margin-bottom: 0.8rem;
+    line-height: 1.3;
+  }
+  .sol-desc {
+    font-size: 0.78rem;
+    color: rgba(232,220,200,0.45);
+    line-height: 1.65;
+  }
+  .sol-badge {
+    display: inline-block;
+    margin-top: 1rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+    background: rgba(142,201,122,0.1);
+    color: var(--leaf);
+    border: 1px solid rgba(142,201,122,0.2);
+  }
+
+  /* ── ONE HEALTH ── */
+  #onehealth {
+    padding: 7rem 4rem;
+  }
+  .onehealth-venn {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+    position: relative;
+    height: 280px;
+  }
+  .venn-circle {
+    position: absolute;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 700;
+    mix-blend-mode: screen;
+  }
+  .vc-human {
+    background: rgba(201,74,30,0.2);
+    border: 1px solid rgba(201,74,30,0.4);
+    color: rgba(201,74,30,0.9);
+    top: 0; left: calc(50% - 180px);
+  }
+  .vc-animal {
+    background: rgba(212,130,10,0.2);
+    border: 1px solid rgba(212,130,10,0.4);
+    color: rgba(212,130,10,0.9);
+    top: 0; right: calc(50% - 180px);
+  }
+  .vc-env {
+    background: rgba(74,103,65,0.25);
+    border: 1px solid rgba(107,158,94,0.5);
+    color: rgba(142,201,122,0.9);
+    bottom: 0; left: 50%; transform: translateX(-50%);
+  }
+  .venn-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -30%);
+    background: rgba(232,220,200,0.07);
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(232,220,200,0.15);
+    font-family: 'Playfair Display', serif;
+    font-size: 0.7rem;
+    font-style: italic;
+    color: var(--cream);
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  /* ── YOUTH CTA ── */
+  #youth {
+    max-width: 100%;
+    padding: 8rem 10%;
+    background:
+      radial-gradient(ellipse 100% 80% at 50% 100%, rgba(74,103,65,0.12) 0%, transparent 60%),
+      var(--earth);
+    text-align: center;
+  }
+  .youth-inner { max-width: 700px; margin: 0 auto; }
+  .youth-inner h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  .youth-inner h2 em { font-style: italic; color: var(--sprout); }
+  .youth-inner p {
+    font-size: 1rem;
+    color: rgba(232,220,200,0.6);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  .action-pills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.7rem;
+    margin-top: 2.5rem;
+  }
+  .pill {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(142,201,122,0.25);
+    padding: 0.5rem 1.2rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(142,201,122,0.7);
+    cursor: default;
+    transition: all 0.3s;
+  }
+  .pill:hover {
+    background: rgba(142,201,122,0.08);
+    border-color: var(--sprout);
+    color: var(--sprout);
+  }
+
+  /* ── ABOUT US ── */
+  #about {
+    max-width: 100%;
+    padding: 7rem 10%;
+    background: linear-gradient(180deg, rgba(26,18,8,1) 0%, rgba(20,14,6,1) 100%);
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .about-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .about-header {
+    margin-bottom: 3rem;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+  }
+
+  .member-card {
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(142,201,122,0.1);
+    padding: 1.8rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.8rem;
+    transition: background 0.35s, border-color 0.35s, transform 0.35s;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+  }
+
+  .member-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--sprout), transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+
+  .member-card:hover {
+    background: rgba(142,201,122,0.05);
+    border-color: rgba(142,201,122,0.25);
+    transform: translateY(-4px);
+  }
+
+  .member-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .member-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(74,103,65,0.4), rgba(26,18,8,0.8));
+    border: 1.5px solid rgba(142,201,122,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-style: italic;
+    color: var(--sprout);
+    flex-shrink: 0;
+    transition: border-color 0.3s;
+  }
+
+  .member-card:hover .member-avatar {
+    border-color: var(--sprout);
+  }
+
+  .member-name {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.82rem;
+    color: var(--cream);
+    line-height: 1.35;
+    letter-spacing: 0.01em;
+  }
+
+  .member-email {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.56rem;
+    color: rgba(142,201,122,0.5);
+    letter-spacing: 0.03em;
+    line-height: 1.4;
+    word-break: break-all;
+    transition: color 0.3s;
+  }
+
+  .member-card:hover .member-email {
+    color: var(--leaf);
+  }
+
+  .member-divider {
+    width: 24px;
+    height: 1px;
+    background: rgba(142,201,122,0.2);
+    flex-shrink: 0;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #110d06;
+    padding: 3rem 4rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-school {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    color: rgba(232,220,200,0.25);
+    line-height: 1.7;
+    letter-spacing: 0.05em;
+  }
+  .footer-school strong {
+    color: rgba(232,220,200,0.45);
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+  .footer-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(142,201,122,0.35);
+    border: 1px solid rgba(142,201,122,0.12);
+    padding: 0.5rem 1rem;
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── PROGRESS BAR ── */
+  #progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--moss), var(--sprout));
+    z-index: 10000;
+    width: 0%;
+    transition: width 0.1s;
+  }
+
+  /* ── FLOATING SIDE MENU ── */
+  #sidenav {
+    position: fixed;
+    top: 50%;
+    right: 2rem;
+    transform: translateY(-50%);
+    z-index: 5000;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    background: rgba(26,18,8,0.85);
+    border: 1px solid rgba(142,201,122,0.15);
+    backdrop-filter: blur(12px);
+    padding: 0.5rem 0;
+    min-width: 220px;
+    transition: opacity 0.4s, transform 0.4s;
+  }
+  #sidenav.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-50%) translateX(20px);
+  }
+
+  .snav-header {
+    padding: 0.9rem 1.2rem 0.7rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    margin-bottom: 0.3rem;
+  }
+  .snav-header span {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--leaf);
+  }
+
+  .snav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.75rem 1.2rem;
+    cursor: pointer;
+    transition: background 0.25s;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+  }
+  .snav-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--sprout);
+    transform: scaleY(0);
+    transition: transform 0.3s;
+    transform-origin: bottom;
+  }
+  .snav-item:hover { background: rgba(142,201,122,0.06); }
+  .snav-item:hover::before { transform: scaleY(1); }
+  .snav-item.active { background: rgba(142,201,122,0.08); }
+  .snav-item.active::before { transform: scaleY(1); }
+
+  .snav-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(232,220,200,0.2);
+    flex-shrink: 0;
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .snav-item.active .snav-dot,
+  .snav-item:hover .snav-dot {
+    background: var(--sprout);
+    border-color: var(--sprout);
+  }
+
+  .snav-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+  .snav-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    color: rgba(232,220,200,0.25);
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .snav-item.active .snav-num,
+  .snav-item:hover .snav-num { color: var(--leaf); }
+
+  .snav-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    color: rgba(232,220,200,0.45);
+    font-weight: 400;
+    transition: color 0.3s;
+    line-height: 1.3;
+  }
+  .snav-item.active .snav-label,
+  .snav-item:hover .snav-label { color: var(--cream); }
+
+  /* ── MENU TOGGLE BUTTON ── */
+  #menu-toggle {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 5001;
+    width: 42px; height: 42px;
+    background: rgba(26,18,8,0.9);
+    border: 1px solid rgba(142,201,122,0.25);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    backdrop-filter: blur(8px);
+    transition: border-color 0.3s;
+  }
+  #menu-toggle:hover { border-color: var(--sprout); }
+  #menu-toggle span {
+    display: block;
+    width: 18px; height: 1.5px;
+    background: var(--cream);
+    transition: transform 0.35s, opacity 0.35s, width 0.35s;
+    transform-origin: center;
+  }
+  #menu-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  #menu-toggle.open span:nth-child(2) { opacity: 0; width: 0; }
+  #menu-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1.5rem 2rem; }
+    .nav-links { display: none; }
+    section, #solutions, #story, #stats, #onehealth, #youth, footer { padding: 4rem 2rem; }
+    #intro, #cycle { grid-template-columns: 1fr; gap: 3rem; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .solutions-grid { grid-template-columns: 1fr; }
+    .hero-content { padding: 3rem 2rem 2rem; }
+    .hero-meta { flex-direction: column; gap: 2rem; }
+    .hero-scroll { padding: 2rem; }
+    .cycle-diagram { height: 300px; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+    #sidenav {
+      right: 0;
+      top: auto;
+      bottom: 0;
+      transform: none;
+      flex-direction: row;
+      flex-wrap: wrap;
+      min-width: unset;
+      width: 100%;
+      border-radius: 0;
+      border-left: none;
+      border-right: none;
+      border-bottom: none;
+      padding: 0;
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+    #sidenav.hidden {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    .snav-header { width: 100%; }
+    .snav-item { width: 50%; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    #menu-toggle { top: auto; bottom: 1.5rem; right: 1.5rem; }
+    #about { padding: 5rem 2rem; }
+    .about-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.8rem;
+    }
+    .about-grid .member-card:last-child {
+      grid-column: 1 / -1;
+      max-width: 280px;
+      margin: 0 auto;
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
+    .about-grid .member-card:last-child {
+      grid-column: auto;
+      max-width: none;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- MENU TOGGLE BUTTON -->
+<button id="menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
+  <span></span><span></span><span></span>
+</button>
+
+<!-- FLOATING SIDE NAVIGATION -->
+<nav id="sidenav" aria-label="Essay sections">
+  <div class="snav-header"><span>Essay Contents</span></div>
+  <a class="snav-item" href="#intro" onclick="navClick(event,'intro')">
+    <div class="snav-dot"></div>
+    <div class="snav-text">
+      <span class="snav-num">01</span>
+      <span class="snav-label">The Problem</span>
+    </div>
+  </a>
+  <a class="snav-item" href="#story" onclick="navClick(event,'story')">
+    <div class="snav-dot"></div>
+    <div class="snav-text">
+      <span class="snav-num">02</span>
+      <span class="snav-label">Human Story</span>
+    </div>
+  </a>
+  <a class="snav-item" href="#cycle" onclick="navClick(event,'cycle')">
+    <div class="snav-dot"></div>
+    <div class="snav-text">
+      <span class="snav-num">03</span>
+      <span class="snav-label">Escalation Cycle</span>
+    </div>
+  </a>
+  <a class="snav-item" href="#solutions" onclick="navClick(event,'solutions')">
+    <div class="snav-dot"></div>
+    <div class="snav-text">
+      <span class="snav-num">04</span>
+      <span class="snav-label">Evidence-Based Solutions</span>
+    </div>
+  </a>
+  <a class="snav-item" href="#onehealth" onclick="navClick(event,'onehealth')">
+    <div class="snav-dot"></div>
+    <div class="snav-text">
+      <span class="snav-num">05</span>
+      <span class="snav-label">One Health Framework</span>
+    </div>
+  </a>
+  <a class="snav-item" href="#youth" onclick="navClick(event,'youth')">
+    <div class="snav-dot"></div>
+    <div class="snav-text">
+      <span class="snav-num">06</span>
+      <span class="snav-label">Call to Action</span>
+    </div>
+  </a>
+  <a class="snav-item" href="#about" onclick="navClick(event,'about')">
+    <div class="snav-dot"></div>
+    <div class="snav-text">
+      <span class="snav-num">07</span>
+      <span class="snav-label">About Us</span>
+    </div>
+  </a>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-bg"></div>
+  <div class="river-lines">
+    <svg viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,200 C200,180 400,250 600,220 S900,160 1100,200 S1300,250 1440,220" fill="none" stroke="rgba(74,103,65,0.4)" stroke-width="1">
+        <animate attributeName="d" dur="12s" repeatCount="indefinite"
+          values="M0,200 C200,180 400,250 600,220 S900,160 1100,200 S1300,250 1440,220;
+                  M0,210 C200,230 400,180 600,240 S900,200 1100,180 S1300,210 1440,200;
+                  M0,200 C200,180 400,250 600,220 S900,160 1100,200 S1300,250 1440,220"/>
+      </path>
+      <path d="M0,450 C300,420 500,490 700,460 S1000,400 1200,450 S1380,490 1440,470" fill="none" stroke="rgba(74,103,65,0.25)" stroke-width="1">
+        <animate attributeName="d" dur="18s" repeatCount="indefinite"
+          values="M0,450 C300,420 500,490 700,460 S1000,400 1200,450 S1380,490 1440,470;
+                  M0,460 C300,490 500,430 700,480 S1000,460 1200,420 S1380,460 1440,450;
+                  M0,450 C300,420 500,490 700,460 S1000,400 1200,450 S1380,490 1440,470"/>
+      </path>
+      <path d="M0,700 C250,680 450,740 650,710 S950,660 1150,700 S1350,730 1440,700" fill="none" stroke="rgba(74,103,65,0.15)" stroke-width="1">
+        <animate attributeName="d" dur="22s" repeatCount="indefinite"
+          values="M0,700 C250,680 450,740 650,710 S950,660 1150,700 S1350,730 1440,700;
+                  M0,710 C250,730 450,690 650,720 S950,700 1150,670 S1350,700 1440,690;
+                  M0,700 C250,680 450,740 650,710 S950,660 1150,700 S1350,730 1440,700"/>
+      </path>
+    </svg>
+  </div>
+
+  <nav>
+    <div class="nav-logo">IFLC 2026 · Indonesia</div>
+    <ul class="nav-links">
+      <li><a href="#intro">Problem</a></li>
+      <li><a href="#cycle">AMR Cycle</a></li>
+      <li><a href="#solutions">Solutions</a></li>
+      <li><a href="#youth">Act Now</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero-content">
+    <div class="hero-tag">Essay — Antimicrobial Resistance</div>
+    <h1 class="hero-title">
+      Reclaiming<br><em>The Earth</em><br>We Farm
+      <span class="sub">Sustainable Agriculture & Environmental Action<br>as a Global Strategy Against Antimicrobial Resistance</span>
+    </h1>
+    <div class="hero-meta">
+      <div class="hero-authors">
+        <strong>Authors</strong>
+        Muhammad Azzhafran Nur — Team Leader<br>
+        Alisyar Azis Muhara<br>
+        Muhammad 'Adl Asshodiq<br>
+        Muhammad Hafiz Alfatih<br>
+        Raffa Ahmad Al-Aula
+      </div>
+      <div style="display:flex; gap: 1rem; flex-wrap: wrap;">
+        <div class="hero-stat-box">
+          <div class="num">4.95M</div>
+          <div class="label">deaths annually linked to AMR worldwide</div>
+        </div>
+        <div class="hero-stat-box">
+          <div class="num" style="color:var(--amber)">73%</div>
+          <div class="label">of all antibiotics consumed by agriculture globally</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll to explore
+  </div>
+</div>
+
+<div class="full-divider"></div>
+
+<!-- INTRO -->
+<section id="intro" class="reveal">
+  <div>
+    <div class="section-label">01 · The Problem</div>
+    <h2 class="section-title">A River Once Beautiful,<br><em>Now Invisible Danger</em></h2>
+  </div>
+  <div class="intro-grid">
+    <div class="intro-text">
+      <p>The Citarum River was once the lifeblood of West Java — clean, abundant, and sustaining. Today, the most dangerous threat cannot be seen, smelled, or tasted.</p>
+      <p>Antibiotic residues in water are conditioning bacteria to become untreatable. Continuously exposed to low concentrations of antibiotics from farms, hospitals, and factories upstream, these bacteria develop resistance to the very medicines on which modern healthcare depends.</p>
+      <p>This case isn't isolated. From the Ganges to the Yellow River to the Mississippi — the world's waterways are being turned into incubators of drug-resistant bacteria. The WHO has identified antimicrobial resistance (AMR) as one of the ten greatest threats to global health.</p>
+    </div>
+    <div class="citarum-facts">
+      <div class="fact-card">
+        <div class="fact-num">300 km</div>
+        <div class="fact-desc">Length of the Citarum River through West Java, supplying drinking water to 80% of Jakarta's population</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-num">2,000+</div>
+        <div class="fact-desc">Industrial factories discharging directly into the river; dissolved oxygen so low the river is biologically dead in sections</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-num">28M</div>
+        <div class="fact-desc">People whose watershed, food chain, and health future are threatened — after BRIN detected amoxicillin in every Upper Citarum sample tested in 2021</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-num">400,000 ha</div>
+        <div class="fact-desc">Rice paddies irrigated by Citarum water, directly exposed to antibiotic runoff from upstream farms</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- STORY SECTION -->
+<div id="story" class="reveal">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="section-label">02 · A Human Story</div>
+  </div>
+  <blockquote class="story-quote">
+    Pak Ahmad, a rice farmer in a Citarum basin village, cuts his foot on rusty metal. The wound becomes infected. Amoxicillin is prescribed. Nothing happens. By the time he reaches a hospital in Bandung, the infection has spread to his bones. Antibiotic after antibiotic is tried. Nothing works. He dies two weeks later from a wound that penicillin would have resolved in a previous generation.
+  </blockquote>
+  <div class="story-attribution">— A case study illustrating AMR's real human cost, as described in the essay</div>
+</div>
+
+<!-- STATS -->
+<div id="stats" class="reveal">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="s-num red">1.27M</div>
+      <div class="s-label">Direct deaths caused by AMR annually (Murray et al., 2022)</div>
+    </div>
+    <div class="stat-item">
+      <div class="s-num amber">10M</div>
+      <div class="s-label">Projected AMR deaths per year by 2050 — surpassing cancer mortality</div>
+    </div>
+    <div class="stat-item">
+      <div class="s-num" style="color:#b8860b;">$100T</div>
+      <div class="s-label">Estimated economic cost of AMR by 2050 if left unchecked (World Bank)</div>
+    </div>
+    <div class="stat-item">
+      <div class="s-num green">50%</div>
+      <div class="s-label">Drop in livestock antibiotic use in the EU after the 2006 growth-promoter ban — with no production collapse</div>
+    </div>
+  </div>
+</div>
+
+<div class="full-divider"></div>
+
+<!-- AMR CYCLE -->
+<section id="cycle" class="reveal">
+  <div class="cycle-text">
+    <div class="section-label">03 · The Escalation Cycle</div>
+    <h2 class="section-title">From Farm<br><em>To Human Infection</em></h2>
+    <p>AMR drives a self-reinforcing escalation. Antibiotic emissions select for resistant bacteria → treatment failures → doctors use stronger last-resort drugs → more environmental persistence → resistance to those drugs → no therapeutic options remain.</p>
+    <p>Between 50–70% of each antibiotic dose given to livestock is excreted unchanged in animal waste. Spread as fertilizer on rice paddies, rainfall carries these active compounds into waterways — creating a continuous selection pressure on bacterial communities.</p>
+    <p>Most critically: unlike plastic pollution, <strong>genetic pollution is irreversible</strong> on human timescales. Resistance genes can persist in sediment for decades or centuries. Prevention is categorically superior to remediation.</p>
+  </div>
+  <div class="cycle-diagram">
+    <div class="cycle-ring ring-1"></div>
+    <div class="cycle-ring ring-2"></div>
+    <div class="ring-center">
+      <div class="c-label">AMR<br>Crisis</div>
+    </div>
+    <div class="cycle-node n1">
+      <div class="n-dot"></div>
+      Farm Antibiotic<br>Use
+    </div>
+    <div class="cycle-node n2">
+      <div class="n-dot" style="background:var(--amber); border-color:var(--amber);"></div>
+      River<br>Contamination
+    </div>
+    <div class="cycle-node n3">
+      <div class="n-dot" style="background:var(--warning); border-color:var(--warning);"></div>
+      Human<br>Infection
+    </div>
+    <div class="cycle-node n4">
+      <div class="n-dot" style="background:var(--clay); border-color:var(--clay);"></div>
+      Treatment<br>Failure
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- SOLUTIONS -->
+<div id="solutions" class="reveal">
+  <div class="solutions-inner">
+    <div class="section-label">04 · Evidence-Based Solutions</div>
+    <h2 class="section-title">Six Coordinated<br><em>Interventions</em></h2>
+    <div class="solutions-grid">
+      <div class="sol-card">
+        <div class="sol-num">01</div>
+        <div class="sol-title">Enforce Antibiotic Growth Promoter Ban</div>
+        <div class="sol-desc">Enforce Permentan No. 14/2017 through regular inspections, meaningful penalties, and transition subsidies for smallholders.</div>
+        <div class="sol-badge">Policy</div>
+      </div>
+      <div class="sol-card">
+        <div class="sol-num">02</div>
+        <div class="sol-title">Mandate 60-Day Manure Composting</div>
+        <div class="sol-desc">Composting for a minimum of 60 days before field application destroys 90–99% of resistant bacteria. Delivered through subsidised community facilities.</div>
+        <div class="sol-badge">Agricultural Practice</div>
+      </div>
+      <div class="sol-card">
+        <div class="sol-num">03</div>
+        <div class="sol-title">Biochar Filters from Rice Husks</div>
+        <div class="sol-desc">Deploy at farm level. A 2022 study confirmed 94% removal of Pseudomonas aeruginosa and 88% removal of clarithromycin at ~$0.05/litre cost.</div>
+        <div class="sol-badge">Technology</div>
+      </div>
+      <div class="sol-card">
+        <div class="sol-num">04</div>
+        <div class="sol-title">Farmer Training Programs</div>
+        <div class="sol-desc">Training in hygiene, vaccination, and composting reduced antibiotic use by 40% in Thai poultry farms within two years — directly replicable in Indonesia.</div>
+        <div class="sol-badge">Education</div>
+      </div>
+      <div class="sol-card">
+        <div class="sol-num">05</div>
+        <div class="sol-title">Advanced Wastewater Treatment</div>
+        <div class="sol-desc">Ozonation (99% bacterial removal), activated carbon filtration (90–95% antibiotic removal), and membrane bioreactors (99.9% removal) mandatory for all Citarum-basin factories.</div>
+        <div class="sol-badge">Infrastructure</div>
+      </div>
+      <div class="sol-card">
+        <div class="sol-num">06</div>
+        <div class="sol-title">Bacteriophage Therapy & Probiotics</div>
+        <div class="sol-desc">Phage therapy and probiotic supplementation reduced Salmonella infections in poultry by 70%, replacing antibiotics without generating resistance.</div>
+        <div class="sol-badge">Biotechnology</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="full-divider"></div>
+
+<!-- ONE HEALTH -->
+<section id="onehealth" class="reveal">
+  <div style="max-width:700px; margin:0 auto; text-align:center;">
+    <div class="section-label" style="justify-content:center;">05 · Framework</div>
+    <h2 class="section-title">The <em>One Health</em> Principle</h2>
+    <p style="font-size:0.95rem; color:rgba(232,220,200,0.6); line-height:1.8;">Human health, animal health, and environmental health form a single, inseparable system. Endorsed by WHO, FAO, and OIE — because AMR originates at the intersection of all three domains, no single-sector intervention is sufficient.</p>
+  </div>
+  <div class="onehealth-venn">
+    <div class="venn-circle vc-human">Human<br>Health</div>
+    <div class="venn-circle vc-animal">Animal<br>Health</div>
+    <div class="venn-circle vc-env">Environmental<br>Health</div>
+    <div class="venn-center">One Health</div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- YOUTH CTA -->
+<div id="youth" class="reveal">
+  <div class="youth-inner">
+    <div class="section-label" style="justify-content:center;">06 · Call to Action</div>
+    <h2>The Next Generation<br>Must <em>Act Before the Window Closes</em></h2>
+    <p>The knowledge exists. The solutions are proven. Indonesian students — living within the Citarum watershed — are not bystanders to this crisis. They are its most credible advocates, most adaptable innovators, and essential bridge-builders between evidence and action.</p>
+    <p>As advocates, as innovators, as bridge-builders — the leadership gap in AMR communication is precisely the space the next generation is best positioned to fill.</p>
+    <div class="action-pills">
+      <div class="pill">Never buy antibiotics without prescription</div>
+      <div class="pill">Complete every prescribed course</div>
+      <div class="pill">Choose antibiotic-free meat & eggs</div>
+      <div class="pill">Support local sustainable farmers</div>
+      <div class="pill">Spread AMR awareness</div>
+      <div class="pill">Demand policy enforcement</div>
+    </div>
+  </div>
+</div>
+
+<div class="full-divider"></div>
+
+<!-- ABOUT US -->
+<div id="about" class="reveal">
+  <div class="about-inner">
+    <div class="about-header">
+      <div class="section-label">07 · The Team</div>
+      <h2 class="section-title">About <em>Us</em></h2>
+    </div>
+    <div class="about-grid">
+
+      <div class="member-card">
+        <div class="member-avatar">A</div>
+        <div class="member-name">Muhammad Azzhafran Nur</div>
+        <div class="member-divider"></div>
+        <div class="member-email">muhammadazzhafran55@gmail.com</div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar">A</div>
+        <div class="member-name">Alisyar Azis Muhara</div>
+        <div class="member-divider"></div>
+        <div class="member-email">alisyarmuhara@gmail.com</div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar">A</div>
+        <div class="member-name">Muhammad 'Adl Asshodiq</div>
+        <div class="member-divider"></div>
+        <div class="member-email">m.a.asshodiqihbs@gmail.com</div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar">H</div>
+        <div class="member-name">Muhammad Hafiz Alfatih</div>
+        <div class="member-divider"></div>
+        <div class="member-email">me.not.hafiz@gmail.com</div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar">R</div>
+        <div class="member-name">Raffa Ahmad Al-Aula</div>
+        <div class="member-divider"></div>
+        <div class="member-email">raahmadfa@gmail.com</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-school">
+    <strong>SMA Ibnu Hajar Boarding School</strong>
+    Depok, West Java, Indonesia · 2026<br>
+    International Future Leaders Conference
+  </div>
+  <div class="footer-badge">Reclaiming The Earth We Farm</div>
+</footer>
+
+<script>
+  // ── PROGRESS BAR ──
+  window.addEventListener('scroll', () => {
+    const scroll = window.scrollY;
+    const height = document.body.scrollHeight - window.innerHeight;
+    document.getElementById('progress').style.width = (scroll / height * 100) + '%';
+    updateActiveNav();
+  });
+
+  // ── SCROLL REVEAL ──
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        revealObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => revealObserver.observe(r));
+
+  // ── STAGGER FACT CARDS ──
+  document.querySelectorAll('.fact-card').forEach((card, i) => {
+    card.style.transitionDelay = (i * 0.1) + 's';
+  });
+
+  // ── STAGGER MEMBER CARDS ──
+  document.querySelectorAll('.member-card').forEach((card, i) => {
+    card.style.transitionDelay = (i * 0.08) + 's';
+  });
+
+  // ── MENU TOGGLE ──
+  let menuOpen = true;
+  function toggleMenu() {
+    menuOpen = !menuOpen;
+    const nav = document.getElementById('sidenav');
+    const btn = document.getElementById('menu-toggle');
+    nav.classList.toggle('hidden', !menuOpen);
+    btn.classList.toggle('open', menuOpen);
+  }
+
+  // Start with menu open; add open class to button initially
+  document.getElementById('menu-toggle').classList.add('open');
+
+  // ── SMOOTH SCROLL + CLOSE ON MOBILE ──
+  function navClick(e, id) {
+    e.preventDefault();
+    const target = document.getElementById(id);
+    if (!target) return;
+    const offset = 80;
+    const top = target.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: 'smooth' });
+    // On mobile, close menu after click
+    if (window.innerWidth <= 900) {
+      menuOpen = false;
+      document.getElementById('sidenav').classList.add('hidden');
+      document.getElementById('menu-toggle').classList.remove('open');
+    }
+  }
+
+  // ── ACTIVE SECTION TRACKING ──
+  const sectionIds = ['intro', 'story', 'cycle', 'solutions', 'onehealth', 'youth', 'about'];
+
+  function updateActiveNav() {
+    const scrollMid = window.scrollY + window.innerHeight * 0.4;
+    let current = null;
+    for (const id of sectionIds) {
+      const el = document.getElementById(id);
+      if (!el) continue;
+      if (el.offsetTop <= scrollMid) current = id;
+    }
+    document.querySelectorAll('.snav-item').forEach(item => {
+      const href = item.getAttribute('href').replace('#', '');
+      item.classList.toggle('active', href === current);
+    });
+  }
+
+  // Run on load
+  updateActiveNav();
+</script>
+</body>
+</html>
